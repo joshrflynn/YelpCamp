@@ -1,0 +1,92 @@
+<% layout("Layouts/boilerplate") %>
+<link rel="stylesheet" href="/CSS/stars.css" />
+
+
+
+<div class="row mx-2">
+  <div class="col-12 col-md-6 my-3">
+    
+    <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% cg.image.forEach((i,j) => { %>
+        <div class="carousel-item <%= j === 0 ? "active" : "" %>"><img src="<%=i.url%>"  class="d-block w-100" alt="..."/></div>
+        <%})%>
+      </div>
+
+      <% if (cg.image.length > 1) { %> 
+        <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+      <% } %> 
+    </div>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title"><%= cg.title %></h5>
+        <p class="card-text d-none d-md-block"><%= cg.description %></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted"><%= cg.location %></li>
+        <li class="list-group-item">Submitted by: <%= cg.author.username %></li>
+        <li class="list-group-item">$<%= cg.price %> / night</li>
+      </ul>
+      <% if (currUser && cg.author.equals(currUser._id)) { %>
+      <div class="card-body">
+        <a class="btn btn-info" href="/campgrounds/<%= cg._id %>/edit">Edit</a>
+        <form class="d-inline" action="/campgrounds/<%= cg._id %>?_m=DELETE" method="POST">
+          <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+      </div>
+      <% } %>
+
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 my-3">
+    <div id='map'></div>
+    <% if (currUser) { %>
+    <h2>Leave a Review:</h2>
+    <div><%- include("../partials/reviewform") %></div>
+    <%}%> <% for (let r of cg.reviews) {%>
+    <div class="card my-3">
+      <div class="card-body">
+        <div class="mb-3">
+          <h5 class="card-title">Rating: <%= r.rating %>/5</h5>
+          <p class="starability-result" data-rating="<%= r.rating %>">Rated: <%= r.rating %> stars</p>
+          <h6 class="card-subtitle mb-2 text-muted">By: <%= r.author.username %></h6>
+          <p>Review: <%= r.body %></p>
+          <% if (currUser && r.author.equals(currUser._id)) { %>
+          <form action="/campgrounds/<%= cg._id %>/reviews/<%= r._id %>?_m=DELETE" method="POST">
+            <button class="btn btn-warning btn-sm">Delete</button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<script>
+  const mapToken = "<%-process.env.MAPBOX_TOKEN%>"
+
+  //linting error in VSCode, but functions as intended
+  //ignore linting error
+  const campground = <%- JSON.stringify(cg) %>;
+</script>
+
+<script src="/JS/showPageMap.js"></script>

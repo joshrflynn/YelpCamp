@@ -1,0 +1,4 @@
+mongo.bat
+.env
+node_modules
+seeds

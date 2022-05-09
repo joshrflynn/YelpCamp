@@ -1,0 +1,84 @@
+<% layout("Layouts/boilerplate") %>
+<div class="row">
+  <h1 class="text-center">New Campground</h1>
+  <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+    <div class="card-body">
+      <div class="card shadow-lg">
+        <form action="/campgrounds" method="POST" novalidate class="validated-form p-2" enctype="multipart/form-data">
+          <div>
+            <div class="mb-3">
+              <label class="form-label" for="title">Title:</label>
+              <input class="form-control" type="text" name="campground[title]" id="title" required />
+              <div class="valid-feedback">Looks Good!</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="location">Location:</label>
+              <input class="form-control" type="text" name="campground[location]" id="location" required />
+              <div class="valid-feedback">Looks Good!</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="price">Price:</label>
+              <div class="input-group">
+                <span class="input-group-text" id="price-label">$</span>
+                <input
+                  name="campground[price]"
+                  type="text"
+                  class="form-control"
+                  id="price"
+                  placeholder="0.00"
+                  required
+                />
+                <div class="valid-feedback">Looks Good!</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="description">Description:</label>
+              <textarea
+                class="form-control"
+                name="campground[description]"
+                id="description"
+                rows="3"
+                required
+              ></textarea>
+              <div class="valid-feedback">Looks Good!</div>
+            </div>
+            <div class="mb-3">
+              <label for="formFileMultiple custom-file custom-file-label" class="form-label">Upload Images:</label>
+              <input class="form-control" type="file" name="campground[image]" id="image" multiple />
+            </div>
+          </div>
+          <div class="mb-3 w-75 m-auto">
+            <button class="btn btn-success w-100" type="submit">Add Campground</button>
+          </div>
+        </form>
+        <a class="btn btn-outline-danger w-75 m-auto" href="/campgrounds">Back to Campgrounds</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".validated-form");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script> -->
