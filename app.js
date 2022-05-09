@@ -162,6 +162,7 @@ app.use((err, req, res, next) => {
 });
 
 //set port opening
-app.listen(6969, (req, res) => {
-  console.log("Open");
+const port = process.env.PORT || 3000;
+app.listen(port, (req, res) => {
+  console.log(`Open on ${port}`);
 });
