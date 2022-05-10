@@ -88,6 +88,8 @@ app.use(
         "data:",
         `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`, //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
         "https://images.unsplash.com/",
+        "https://picsum.photos/",
+        "http://i.picsum.photos/",
       ],
       fontSrc: ["'self'", ...fontSrcUrls],
     },
